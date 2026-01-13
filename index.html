@@ -116,6 +116,10 @@ p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
   aspect-ratio:1080/1350;
   max-width:360px;
 }
+.photo-frame.frame3{
+  aspect-ratio:1587/2245; /* update untuk foto ke-3 */
+  max-width:360px;
+}
 .photo-caption {
   margin-top: 12px;
   font-size: 0.95rem;
@@ -201,7 +205,7 @@ p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
   <div class="text-slide"><div class="text-box"></div></div>
   
   <div class="photo-slide">
-    <div class="photo-frame"><img src="photos/3.jpg"></div>
+    <div class="photo-frame frame3"><img src="photos/3.png"></div> <!-- foto ke-3 PNG, frame 1587x2245 -->
   </div>
   
   <div class="photo-slide">
@@ -221,7 +225,7 @@ function nextPage(){
     pages[current].classList.remove("active");
     current++;
     pages[current].classList.add("active");
-    addShapes(pages[current]); // tambahkan shapes di page ini
+    addShapes(pages[current]);
   }
 }
 document.body.addEventListener("click",()=>{if(current!==2)nextPage();});
@@ -257,13 +261,11 @@ cake.addEventListener("click",async e=>{
   e.stopPropagation();
   flames.forEach(f=>f.style.display="none");
 
-  // hilangkan teks "Make a wish" dan "tap the cake"
   const cakeText = document.getElementById("cakeText");
   if(cakeText) cakeText.style.display = "none";
   const tapText = document.querySelector("#cakePage p");
   if(tapText) tapText.style.display = "none";
 
-  // explode crumbs
   for(let i=0;i<22;i++){
     const c=document.createElement("div");
     c.className="crumb";c.style.left="90px";c.style.top="55px";
@@ -273,7 +275,6 @@ cake.addEventListener("click",async e=>{
   }
   cake.style.opacity="0";
 
-  // confetti
   for(let i=0;i<80;i++){
     const conf=document.createElement("div");conf.className="confetti";
     conf.style.background=['#ff5f5f','#fce18a','#9cff5f','#5f9cff','#d05fff'][Math.floor(Math.random()*5)];
@@ -304,7 +305,6 @@ cake.addEventListener("click",async e=>{
   },6000);
 });
 
-// shapes untuk setiap page
 function addShapes(page){
   const shapesArr=['circle','star','heart'];
   const container=page.querySelector(".shapes-container");
@@ -329,7 +329,6 @@ function addShapes(page){
   }
 }
 
-// shapes awal
 pages.forEach(p=>addShapes(p));
 
 </script>
