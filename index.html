@@ -9,10 +9,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden;
-  font-family:'Libre Baskerville',serif;color:#3b2f2f;
-  background:#f4efe9;
-}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Libre Baskerville',serif;color:#3b2f2f;background:#f4efe9}
 
 /* PAGE */
 #pages{width:100%;height:100%;position:relative}
@@ -27,20 +24,12 @@ html,body{width:100%;height:100%;overflow:hidden;
 }
 .page.active{opacity:1;transform:translateX(0);pointer-events:auto}
 
-/* SHAPES CONTAINER */
-.shapes-container{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
-
-/* TEXT */
-h1,h2{font-family:'Cormorant Garamond',serif;font-weight:600}
-h1{font-size:2.4rem}h2{font-size:1.6rem}
-p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
-
 /* SHAPES */
+.shapes-container{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
 .shape{position:absolute;opacity:0.15;}
 .shape.circle{border-radius:50%;}
 .shape.star{width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #ff5f5f;transform:rotate(35deg);}
 .shape.heart{width:20px;height:20px;background:red;clip-path:polygon(50% 0%,61% 12%,75% 12%,87% 25%,100% 40%,87% 60%,50% 100%,13% 60%,0% 40%,13% 25%,25% 12%,39%12%);}
-
 @keyframes floatRandom{
   0%{transform:translate(var(--x0,0),var(--y0,0)) rotate(0deg);}
   25%{transform:translate(var(--x1,0),var(--y1,0)) rotate(45deg);}
@@ -51,7 +40,9 @@ p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
 .shape{animation-name:floatRandom;animation-duration:6s;animation-iteration-count:infinite;animation-timing-function:ease-in-out;}
 
 /* CAKE */
-.cake{width:190px;height:120px;background:#d3a06c;border-radius:20px;margin-top:24px;position:relative;box-shadow:0 14px 26px rgba(0,0,0,.18);cursor:pointer;pointer-events:auto;z-index:10;}
+.cake-container{text-align:center;position:relative;}
+.cake{width:190px;height:120px;background:#d3a06c;border-radius:20px;margin-top:12px;position:relative;box-shadow:0 14px 26px rgba(0,0,0,.18);cursor:pointer;z-index:10;opacity:1;transition:opacity 0.6s ease;}
+.cake.hide{opacity:0;pointer-events:none;}
 .candle{width:10px;height:36px;background:#fff;position:absolute;top:-36px}
 .flame{width:12px;height:12px;background:orange;border-radius:50%;animation:flicker .25s infinite alternate}
 @keyframes flicker{from{transform:scale(1)}to{transform:scale(1.3)}}
@@ -61,18 +52,17 @@ p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
 @keyframes explode{to{transform:translate(var(--x),var(--y)) rotate(720deg);opacity:0}}
 
 /* SLIDESHOW */
-.slideshow{position:absolute;inset:0;display:none;justify-content:center;align-items:center;overflow:hidden}
+.slideshow{position:absolute;inset:0;display:none;justify-content:center;align-items:center;overflow:hidden;z-index:5}
 
 /* PHOTO SLIDES */
 .photo-slide{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;opacity:0;transition:opacity 2.5s ease;flex-direction:column;}
 .photo-slide.active{opacity:1}
 
-/* PHOTO FRAME STYLES */
+/* PHOTO FRAME */
 .photo-frame{width:85vw;max-width:420px;aspect-ratio:1410/1900;background:#efe7dc;padding:12px;border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,.18),inset 0 0 0 1px rgba(0,0,0,.05);display:flex;justify-content:center;align-items:center;}
 .photo-frame img{width:100%;height:100%;object-fit:cover;border-radius:12px}
-
 .photo-frame.frame2{aspect-ratio:1080/1350;max-width:360px;}
-.photo-frame.frame3{aspect-ratio:1587/2245;max-width:360px;} /* FOTO KE‑3 */
+.photo-frame.frame3{aspect-ratio:1587/2245;max-width:360px;}
 
 /* CAPTION */
 .photo-caption{margin-top:12px;font-size:0.95rem;color:#3b2f2f;text-align:center;max-width:360px;}
@@ -110,22 +100,31 @@ p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
 
 <section class="page" id="cakePage">
   <div class="shapes-container"></div>
-  <div class="cake" id="cake">
-    <div class="candle" style="left:45px"><div class="flame"></div></div>
-    <div class="candle" style="left:90px"><div class="flame"></div></div>
-    <div class="candle" style="left:135px"><div class="flame"></div></div>
+
+  <div class="cake-container">
+    <div id="cake-text" style="margin-bottom:12px; font-size:1.2rem; color:#3b2f2f; text-align:center;">
+      <br>Make a wish!<br>.<br>.
+    </div>
+    <div class="cake" id="cake">
+      <div class="candle" style="left:45px"><div class="flame"></div></div>
+      <div class="candle" style="left:90px"><div class="flame"></div></div>
+      <div class="candle" style="left:135px"><div class="flame"></div></div>
+    </div>
+     <div id="cake-text" style="margin-bottom:12px; font-size:1.2rem; color:#3b2f2f; text-align:center;">
+      <br>Tap the cake
+    </div>
   </div>
 </section>
 
 <div class="slideshow" id="slideshow">
 
   <div class="photo-slide">
-    <div class="photo-frame"><img src="https://drive.google.com/uc?export=view&id=1I6wXksoJI_DdOFJznn8Ei-5WP1wS5Lpu"></div>
+    <div class="photo-frame"><img src="poto/1.png" alt="Photo 1"></div>
   </div>
   
   <div class="photo-slide">
     <div>
-      <div class="photo-frame frame2"><img src="https://drive.google.com/uc?export=view&id=1tSlP7VmMklUNLPk04d6lFJdQ44jifGmv"></div>
+      <div class="photo-frame frame2"><img src="poto/2.png" alt="Photo 2"></div>
       <div class="photo-caption">"Still you. Still my favorite person to come back to."</div>
     </div>
   </div>
@@ -133,15 +132,15 @@ p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
   <div class="text-slide"><div class="text-box"></div></div>
   
   <div class="photo-slide">
-    <div class="photo-frame frame3"><img src="https://drive.google.com/uc?export=view&id=1HOtdMz44oJFhPGhTsuHLH3rg3pTn_11s"></div>
+    <div class="photo-frame frame3"><img src="poto/3.png" alt="Photo 3"></div>
   </div>
   
   <div class="photo-slide">
-    <div class="photo-frame"><img src="https://drive.google.com/uc?export=view&id=1nAMrlgQS4hycbf_tXXM2f1aWmtnxi0vS"></div>
+    <div class="photo-frame"><img src="poto/4.png" alt="Photo 4"></div>
   </div>
   
   <div class="photo-slide">
-    <div class="photo-frame"><img src="https://drive.google.com/uc?export=view&id=1W9vl2xeRk81WnW1IhF3V5F_TlBcZPt_w"></div>
+    <div class="photo-frame"><img src="poto/5.png" alt="Photo 5"></div>
   </div>
   
   <div class="text-slide"><div class="text-box"></div></div>
@@ -197,8 +196,8 @@ const textSlides=document.querySelectorAll(".text-slide");
 const textBox=document.querySelectorAll(".text-box");
 
 const texts=[
-"You turn quiet moments into memories I want to keep forever. Being with you makes even the simplest days feel magical.",
-"Still you. Still my favorite person to come back to. Every laugh, every smile you give brightens my world in ways I never knew possible.",
+"Cie Udah Tuaa :O",
+"I hope your smile brings happiness to everyone.I hope you’re always surrounded by kind people.I hope you always come out strong in whatever life throws at you.I hope I’m the one who gets to walk with you through every part of your journey.I really love you.",
 "Every time I see you, I’m reminded how lucky I am to have someone as kind, loving, and genuine as you in my life.",
 "Being with you makes ordinary days extraordinary. Even when nothing special happens, everything feels complete with you by my side.",
 "I fall for you a little more every day. Your presence, your laughter, and your warmth make everything feel lighter and brighter.",
@@ -213,10 +212,13 @@ let step=0;
 cake.addEventListener("click",async e=>{
   e.stopPropagation();
 
-  // hide cake flames
+  // hide cake text
+  document.getElementById("cake-text").style.display="none";
+
+  // hide flames
   flames.forEach(f=>f.style.display="none");
 
-  // crumb + confetti
+  // animasi crumble/confetti
   for(let i=0;i<22;i++){
     const c=document.createElement("div");
     c.className="crumb";c.style.left="90px";c.style.top="55px";
@@ -224,7 +226,7 @@ cake.addEventListener("click",async e=>{
     c.style.setProperty("--y",`${(Math.random()-0.5)*320}px`);
     cake.appendChild(c);
   }
-  cake.style.opacity="0";
+  cake.classList.add("hide");
 
   for(let i=0;i<80;i++){
     const conf=document.createElement("div");conf.className="confetti";
@@ -237,7 +239,7 @@ cake.addEventListener("click",async e=>{
     setTimeout(()=>conf.remove(),5000);
   }
 
-  // start music
+  // play music
   if(!started){started=true;music.volume=0;await music.play();let v=0;const fade=setInterval(()=>{v+=0.05;music.volume=v;if(v>=1)clearInterval(fade);},120);}
 
   // show slideshow
@@ -249,7 +251,6 @@ cake.addEventListener("click",async e=>{
     step++;
     photos.forEach(p=>p.classList.remove("active"));
     textSlides.forEach(t=>t.classList.remove("active"));
-
     switch(step%8){
       case 0: photos[0].classList.add("active"); break;
       case 1: photos[1].classList.add("active"); break;
@@ -260,7 +261,7 @@ cake.addEventListener("click",async e=>{
       case 6: textBox[1].textContent = ""; typeWriter(textBox[1], texts[1]); textSlides[1].classList.add("active"); break;
       case 7: photos[0].classList.add("active"); break;
     }
-  },15000); // 15 detik per slide
+  },10000);
 });
 
 pages.forEach(p=>addShapes(p));
