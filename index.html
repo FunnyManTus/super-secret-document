@@ -9,11 +9,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{
-  width:100%;height:100%;overflow:hidden;
-  background:#f4efe9;
-  font-family:'Libre Baskerville',serif;color:#3b2f2f;
-}
+html,body{width:100%;height:100%;overflow:hidden;background:#f4efe9;font-family:'Libre Baskerville',serif;color:#3b2f2f}
 
 /* ===== PAGE SYSTEM ===== */
 #pages{width:100%;height:100%;position:relative}
@@ -25,6 +21,7 @@ html,body{
   text-align:center;padding:24px;
   opacity:0;transform:translateX(40px);
   transition:1.2s ease;pointer-events:none;
+  overflow:hidden;
 }
 .page.active{opacity:1;transform:translateX(0);pointer-events:auto}
 
@@ -32,6 +29,26 @@ html,body{
 h1,h2{font-family:'Cormorant Garamond',serif;font-weight:600}
 h1{font-size:2.4rem}h2{font-size:1.6rem}
 p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
+
+/* ===== SHAPES DECORATION ===== */
+.shape{
+  position:absolute;
+  opacity:0.15;
+  pointer-events:none;
+}
+.shape.circle{border-radius:50%;}
+.shape.star{
+  width:0;height:0;
+  border-left:10px solid transparent;
+  border-right:10px solid transparent;
+  border-bottom:20px solid #ff5f5f;
+  transform:rotate(35deg);
+}
+.shape.heart{
+  width:20px;height:20px;
+  background:red;
+  clip-path: polygon(50% 0%, 61% 12%, 75% 12%, 87% 25%, 100% 40%, 87% 60%, 50% 100%, 13% 60%, 0% 40%, 13% 25%, 25% 12%, 39% 12%);
+}
 
 /* ===== CAKE ===== */
 .cake{
@@ -123,12 +140,13 @@ body::after{
 <audio id="music" src="timur.mp3" loop></audio>
 
 <div id="pages">
-<section class="page active">
+
+<section class="page active" id="page0">
   <h1>Happy Birthday,<br>my favorite person.</h1>
   <p>tap anywhere</p>
 </section>
 
-<section class="page">
+<section class="page" id="page1">
   <h2>Another year.</h2>
   <p>Still choosing you.</p>
 </section>
@@ -158,6 +176,7 @@ body::after{
 </div>
 
 <script>
+/* ===== PAGE NAV ===== */
 const pages=document.querySelectorAll(".page");
 let current=0;
 function nextPage(){
@@ -165,11 +184,12 @@ function nextPage(){
     pages[current].classList.remove("active");
     current++;
     pages[current].classList.add("active");
+    addShapes(current);
   }
 }
 document.body.addEventListener("click",()=>{if(current!==2)nextPage()});
 
-/* TYPEWRITER */
+/* ===== TYPEWRITER ===== */
 function typeWriter(el,text,speed=45){
   el.textContent="";
   el.classList.add("typewriter");
@@ -184,7 +204,7 @@ function typeWriter(el,text,speed=45){
   },speed);
 }
 
-/* SLIDESHOW + CONFETTI */
+/* ===== SLIDESHOW + CONFETTI ===== */
 const cake=document.getElementById("cake");
 const flames=document.querySelectorAll(".flame");
 const music=document.getElementById("music");
@@ -274,9 +294,29 @@ cake.addEventListener("click",async e=>{
     }
   },4500);
 });
+
+/* ===== ADD SHAPES DECOR ===== */
+function addShapes(pageIndex){
+  const page=pages[pageIndex];
+  if(!page) return;
+  const shapes=['circle','star','heart'];
+  for(let i=0;i<8;i++){
+    const s=document.createElement('div');
+    const type=shapes[Math.floor(Math.random()*shapes.length)];
+    s.className='shape '+type;
+    s.style.top=Math.random()*80+'%';
+    s.style.left=Math.random()*80+'%';
+    const size=10+Math.random()*20;
+    s.style.width=size+'px';
+    s.style.height=size+'px';
+    s.style.background=['#ff5f5f','#fce18a','#9cff5f','#5f9cff','#d05fff'][Math.floor(Math.random()*5)];
+    page.appendChild(s);
+  }
+}
+
+// Initial shapes for first page
+addShapes(0);
 </script>
 
 </body>
 </html>
-
-
