@@ -74,6 +74,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Libre Baskerville'
 .typewriter::after{content:"|";margin-left:4px;animation:blink 1s infinite;opacity:.6}
 @keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
 
+/* SPECIAL LONG PARAGRAPH TEXT SLIDE */
+.special-text-slide .text-box{background:rgba(255,255,255,0.9);padding:25px 30px;max-width:85%;}
+.special-text-slide .text-box p{margin-bottom:20px;font-size:1.1rem;line-height:1.8;}
+.special-text-slide .text-box p:last-child{margin-bottom:0;}
+
 /* CONFETTI */
 .confetti{position:absolute;width:10px;height:10px;top:0;left:50%;pointer-events:none;opacity:0.9;border-radius:50%;animation:fall linear forwards;}
 @keyframes fall{0%{transform:translateY(0) rotate(0deg);}100%{transform:translateY(120vh) rotate(360deg);}}
@@ -102,7 +107,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Libre Baskerville'
   <div class="shapes-container"></div>
 
   <div class="cake-container">
-    <div id="cake-text" style="margin-bottom:12px; font-size:1.2rem; color:#3b2f2f; text-align:center;">
+    <div class="cake-text" style="margin-bottom:12px; font-size:1.2rem; color:#3b2f2f; text-align:center;">
       <br>Make a wish!<br>.<br>.
     </div>
     <div class="cake" id="cake">
@@ -110,7 +115,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Libre Baskerville'
       <div class="candle" style="left:90px"><div class="flame"></div></div>
       <div class="candle" style="left:135px"><div class="flame"></div></div>
     </div>
-     <div id="cake-text" style="margin-bottom:12px; font-size:1.2rem; color:#3b2f2f; text-align:center;">
+     <div class="cake-text" style="margin-bottom:12px; font-size:1.2rem; color:#3b2f2f; text-align:center;">
       <br>Tap the cake
     </div>
   </div>
@@ -118,10 +123,15 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Libre Baskerville'
 
 <div class="slideshow" id="slideshow">
 
+  <!-- Foto 1 -->
   <div class="photo-slide">
     <div class="photo-frame"><img src="poto/1.png" alt="Photo 1"></div>
   </div>
   
+  <!-- Text 1 -->
+  <div class="text-slide"><div class="text-box"></div></div>
+  
+  <!-- Foto 2 -->
   <div class="photo-slide">
     <div>
       <div class="photo-frame frame2"><img src="poto/2.png" alt="Photo 2"></div>
@@ -129,142 +139,279 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Libre Baskerville'
     </div>
   </div>
   
+  <!-- Text 2 -->
   <div class="text-slide"><div class="text-box"></div></div>
   
+  <!-- Foto 3 -->
   <div class="photo-slide">
     <div class="photo-frame frame3"><img src="poto/3.png" alt="Photo 3"></div>
   </div>
   
+  <!-- Text 3 -->
+  <div class="text-slide"><div class="text-box"></div></div>
+  
+  <!-- Foto 4 -->
   <div class="photo-slide">
     <div class="photo-frame"><img src="poto/4.png" alt="Photo 4"></div>
   </div>
   
+  <!-- Text 4 -->
+  <div class="text-slide"><div class="text-box"></div></div>
+  
+  <!-- Foto 5 -->
   <div class="photo-slide">
     <div class="photo-frame"><img src="poto/5.png" alt="Photo 5"></div>
   </div>
   
-  <div class="text-slide"><div class="text-box"></div></div>
+  <!-- Text 5 (Kalimat Spesial - akan muncul satu per satu) -->
+  <div class="text-slide special-text-slide"><div class="text-box"></div></div>
 
 </div>
 </div>
 
 <script>
 // Pages
-const pages=document.querySelectorAll(".page");
-let current=0;
-function nextPage(){if(current<pages.length-1){pages[current].classList.remove("active");current++;pages[current].classList.add("active");addShapes(pages[current]);}}
-document.body.addEventListener("click",()=>{if(current!==2) nextPage();});
+const pages = document.querySelectorAll(".page");
+let current = 0;
+function nextPage() {
+  if (current < pages.length - 1) {
+    pages[current].classList.remove("active");
+    current++;
+    pages[current].classList.add("active");
+    addShapes(pages[current]);
+  }
+}
+document.body.addEventListener("click", () => {
+  if (current !== 2) nextPage();
+});
 
 // Shapes
-function addShapes(page){
-  const shapesArr=['circle','star','heart'];
-  const container=page.querySelector(".shapes-container");
-  for(let i=0;i<15;i++){
-    const s=document.createElement('div');
-    const type=shapesArr[Math.floor(Math.random()*shapesArr.length)];
-    s.className='shape '+type;
-    const size=10+Math.random()*25;
-    s.style.width=size+'px';s.style.height=size+'px';
-    s.style.background=['#ff5f5f','#fce18a','#9cff5f','#5f9cff','#d05fff'][Math.floor(Math.random()*5)];
+function addShapes(page) {
+  const shapesArr = ['circle', 'star', 'heart'];
+  const container = page.querySelector(".shapes-container");
+  for (let i = 0; i < 15; i++) {
+    const s = document.createElement('div');
+    const type = shapesArr[Math.floor(Math.random() * shapesArr.length)];
+    s.className = 'shape ' + type;
+    const size = 10 + Math.random() * 25;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.background = ['#ff5f5f', '#fce18a', '#9cff5f', '#5f9cff', '#d05fff'][Math.floor(Math.random() * 5)];
     container.appendChild(s);
-    s.style.setProperty('--x0',`${Math.random()*window.innerWidth}px`);
-    s.style.setProperty('--y0',`${Math.random()*window.innerHeight}px`);
-    s.style.setProperty('--x1',`${Math.random()*window.innerWidth}px`);
-    s.style.setProperty('--y1',`${Math.random()*window.innerHeight}px`);
-    s.style.setProperty('--x2',`${Math.random()*window.innerWidth}px`);
-    s.style.setProperty('--y2',`${Math.random()*window.innerHeight}px`);
-    s.style.setProperty('--x3',`${Math.random()*window.innerWidth}px`);
-    s.style.setProperty('--y3',`${Math.random()*window.innerHeight}px`);
-    s.style.animationDuration=(5+Math.random()*6)+'s';
-    s.style.animationDelay=(Math.random()*3)+'s';
+    s.style.setProperty('--x0', `${Math.random() * window.innerWidth}px`);
+    s.style.setProperty('--y0', `${Math.random() * window.innerHeight}px`);
+    s.style.setProperty('--x1', `${Math.random() * window.innerWidth}px`);
+    s.style.setProperty('--y1', `${Math.random() * window.innerHeight}px`);
+    s.style.setProperty('--x2', `${Math.random() * window.innerWidth}px`);
+    s.style.setProperty('--y2', `${Math.random() * window.innerHeight}px`);
+    s.style.setProperty('--x3', `${Math.random() * window.innerWidth}px`);
+    s.style.setProperty('--y3', `${Math.random() * window.innerHeight}px`);
+    s.style.animationDuration = (5 + Math.random() * 6) + 's';
+    s.style.animationDelay = (Math.random() * 3) + 's';
   }
 }
 
-// Typewriter
-function typeWriter(el,text,speed=35){
-  el.textContent="";el.classList.add("typewriter");let i=0;
-  const typing=setInterval(()=>{el.textContent+=text.charAt(i);i++;if(i>=text.length){clearInterval(typing);el.classList.remove("typewriter");}},speed);
+// Typewriter untuk teks biasa
+function typeWriter(el, text, speed = 35) {
+  el.textContent = "";
+  el.classList.add("typewriter");
+  let i = 0;
+  const typing = setInterval(() => {
+    el.textContent += text.charAt(i);
+    i++;
+    if (i >= text.length) {
+      clearInterval(typing);
+      el.classList.remove("typewriter");
+    }
+  }, speed);
+}
+
+// Typewriter khusus untuk paragraf panjang (muncul satu per satu)
+function typeWriterLongParagraph(el, sentences, speed = 35) {
+  el.innerHTML = "";
+  let currentSentence = 0;
+  
+  function typeNextSentence() {
+    if (currentSentence >= sentences.length) return;
+    
+    const p = document.createElement('p');
+    el.appendChild(p);
+    
+    let i = 0;
+    const sentence = sentences[currentSentence];
+    const typing = setInterval(() => {
+      p.textContent += sentence.charAt(i);
+      i++;
+      if (i >= sentence.length) {
+        clearInterval(typing);
+        currentSentence++;
+        
+        // Tunggu 1 detik sebelum mengetik kalimat berikutnya
+        if (currentSentence < sentences.length) {
+          setTimeout(typeNextSentence, 1000);
+        }
+      }
+    }, speed);
+  }
+  
+  typeNextSentence();
 }
 
 // Cake & slideshow
-const cake=document.getElementById("cake");
-const flames=document.querySelectorAll(".flame");
-const music=document.getElementById("music");
-const slideshow=document.getElementById("slideshow");
-const photos=document.querySelectorAll(".photo-slide");
-const textSlides=document.querySelectorAll(".text-slide");
-const textBox=document.querySelectorAll(".text-box");
+const cake = document.getElementById("cake");
+const flames = document.querySelectorAll(".flame");
+const music = document.getElementById("music");
+const slideshow = document.getElementById("slideshow");
+const photos = document.querySelectorAll(".photo-slide");
+const textSlides = document.querySelectorAll(".text-slide");
 
-const texts=[
-"Cie Udah Tuaa :O",
-"I hope your smile brings happiness to everyone.I hope you’re always surrounded by kind people.I hope you always come out strong in whatever life throws at you.I hope I’m the one who gets to walk with you through every part of your journey.I really love you.",
-"Every time I see you, I’m reminded how lucky I am to have someone as kind, loving, and genuine as you in my life.",
-"Being with you makes ordinary days extraordinary. Even when nothing special happens, everything feels complete with you by my side.",
-"I fall for you a little more every day. Your presence, your laughter, and your warmth make everything feel lighter and brighter.",
-"You are my favorite thought in the morning, my comfort at night, and the little happiness in every moment between.",
-"Your laugh is my favorite sound, your smile my favorite sight, and just being with you makes all the small things in life feel perfect.",
-"Every memory we make together becomes a treasure I never want to forget. You make life feel like the most beautiful story."
+// Kalimat-kalimat untuk slideshow
+const texts = [
+  "ciee dahh tuaa :)).",
+  "Every time I see you, I'm reminded how lucky I am to have someone as kind, loving, and genuine as you in my life.",
+  "Being with you makes ordinary days extraordinary. Even when nothing special happens, everything feels complete with you by my side.",
+  "I fall for you a little more every day. Your presence, your laughter, and your warmth make everything feel lighter and brighter.",
+  "You are my favorite thought in the morning, my comfort at night, and the little happiness in every moment between.",
+  "Your laugh is my favorite sound, your smile my favorite sight, and just being with you makes all the small things in life feel perfect.",
+  "Every memory we make together becomes a treasure I never want to forget. You make life feel like the most beautiful story."
 ];
 
-let started=false;
-let step=0;
+// Paragraf panjang untuk slide terakhir (akan muncul satu per satu)
+const longParagraph = [
+  "I hope your smile brings happiness to everyone.",
+  "I hope you're always surrounded by kind people.",
+  "I hope you always come out strong in whatever life throws at you.",
+  "I hope I'm the one who gets to walk with you through every part of your journey.",
+  "I really love you."
+];
 
-cake.addEventListener("click",async e=>{
+let started = false;
+let step = 0;
+let slideInterval = null;
+
+cake.addEventListener("click", async e => {
   e.stopPropagation();
 
-  // hide cake text
-  document.getElementById("cake-text").style.display="none";
+  // Hide cake text
+  document.querySelectorAll('.cake-text').forEach(el => el.style.display = "none");
 
-  // hide flames
-  flames.forEach(f=>f.style.display="none");
+  // Hide flames
+  flames.forEach(f => f.style.display = "none");
 
-  // animasi crumble/confetti
-  for(let i=0;i<22;i++){
-    const c=document.createElement("div");
-    c.className="crumb";c.style.left="90px";c.style.top="55px";
-    c.style.setProperty("--x",`${(Math.random()-0.5)*420}px`);
-    c.style.setProperty("--y",`${(Math.random()-0.5)*320}px`);
+  // Cake explosion animation
+  for (let i = 0; i < 22; i++) {
+    const c = document.createElement("div");
+    c.className = "crumb";
+    c.style.left = "90px";
+    c.style.top = "55px";
+    c.style.setProperty("--x", `${(Math.random() - 0.5) * 420}px`);
+    c.style.setProperty("--y", `${(Math.random() - 0.5) * 320}px`);
     cake.appendChild(c);
   }
   cake.classList.add("hide");
 
-  for(let i=0;i<80;i++){
-    const conf=document.createElement("div");conf.className="confetti";
-    conf.style.background=['#ff5f5f','#fce18a','#9cff5f','#5f9cff','#d05fff'][Math.floor(Math.random()*5)];
-    conf.style.left=Math.random()*100+'vw';
-    conf.style.width=5+Math.random()*8+'px';
-    conf.style.height=5+Math.random()*8+'px';
-    conf.style.animationDuration=(2+Math.random()*3)+'s';
+  // Confetti effect
+  for (let i = 0; i < 80; i++) {
+    const conf = document.createElement("div");
+    conf.className = "confetti";
+    conf.style.background = ['#ff5f5f', '#fce18a', '#9cff5f', '#5f9cff', '#d05fff'][Math.floor(Math.random() * 5)];
+    conf.style.left = Math.random() * 100 + 'vw';
+    conf.style.width = 5 + Math.random() * 8 + 'px';
+    conf.style.height = 5 + Math.random() * 8 + 'px';
+    conf.style.animationDuration = (2 + Math.random() * 3) + 's';
     document.body.appendChild(conf);
-    setTimeout(()=>conf.remove(),5000);
+    setTimeout(() => conf.remove(), 5000);
   }
 
-  // play music
-  if(!started){started=true;music.volume=0;await music.play();let v=0;const fade=setInterval(()=>{v+=0.05;music.volume=v;if(v>=1)clearInterval(fade);},120);}
+  // Play music with fade in
+  if (!started) {
+    started = true;
+    music.volume = 0;
+    try {
+      await music.play();
+      let v = 0;
+      const fade = setInterval(() => {
+        v += 0.05;
+        music.volume = v;
+        if (v >= 1) clearInterval(fade);
+      }, 120);
+    } catch (err) {
+      console.log("Music playback error:", err);
+    }
+  }
 
-  // show slideshow
-  slideshow.style.display="flex";
+  // Show slideshow
+  slideshow.style.display = "flex";
+  
+  // Reset step
+  step = 0;
+  
+  // Show first photo
+  photos.forEach(p => p.classList.remove("active"));
+  textSlides.forEach(t => t.classList.remove("active"));
   photos[0].classList.add("active");
 
-  // slide every 15s
-  setInterval(()=>{
+  // Clear any existing interval
+  if (slideInterval) {
+    clearInterval(slideInterval);
+  }
+
+  // Start slideshow with 10 second intervals
+  slideInterval = setInterval(() => {
     step++;
-    photos.forEach(p=>p.classList.remove("active"));
-    textSlides.forEach(t=>t.classList.remove("active"));
-    switch(step%8){
-      case 0: photos[0].classList.add("active"); break;
-      case 1: photos[1].classList.add("active"); break;
-      case 2: textBox[0].textContent = ""; typeWriter(textBox[0], texts[0]); textSlides[0].classList.add("active"); break;
-      case 3: photos[2].classList.add("active"); break;
-      case 4: photos[3].classList.add("active"); break;
-      case 5: photos[4].classList.add("active"); break;
-      case 6: textBox[1].textContent = ""; typeWriter(textBox[1], texts[1]); textSlides[1].classList.add("active"); break;
-      case 7: photos[0].classList.add("active"); break;
+    
+    // Remove all active states
+    photos.forEach(p => p.classList.remove("active"));
+    textSlides.forEach(t => t.classList.remove("active"));
+    
+    // Determine what to show based on step
+    switch(step % 10) {
+      case 0: // Photo 1
+        photos[0].classList.add("active");
+        break;
+      case 1: // Text 1
+        textSlides[0].querySelector(".text-box").textContent = "";
+        typeWriter(textSlides[0].querySelector(".text-box"), texts[0]);
+        textSlides[0].classList.add("active");
+        break;
+      case 2: // Photo 2
+        photos[1].classList.add("active");
+        break;
+      case 3: // Text 2
+        textSlides[1].querySelector(".text-box").textContent = "";
+        typeWriter(textSlides[1].querySelector(".text-box"), texts[1]);
+        textSlides[1].classList.add("active");
+        break;
+      case 4: // Photo 3
+        photos[2].classList.add("active");
+        break;
+      case 5: // Text 3
+        textSlides[2].querySelector(".text-box").textContent = "";
+        typeWriter(textSlides[2].querySelector(".text-box"), texts[2]);
+        textSlides[2].classList.add("active");
+        break;
+      case 6: // Photo 4
+        photos[3].classList.add("active");
+        break;
+      case 7: // Text 4
+        textSlides[3].querySelector(".text-box").textContent = "";
+        typeWriter(textSlides[3].querySelector(".text-box"), texts[3]);
+        textSlides[3].classList.add("active");
+        break;
+      case 8: // Photo 5
+        photos[4].classList.add("active");
+        break;
+      case 9: // Special long paragraph (muncul satu per satu)
+        textSlides[4].querySelector(".text-box").innerHTML = "";
+        typeWriterLongParagraph(textSlides[4].querySelector(".text-box"), longParagraph);
+        textSlides[4].classList.add("active");
+        break;
     }
-  },10000);
+  }, 10000); // 10 seconds per slide
 });
 
-pages.forEach(p=>addShapes(p));
+// Add shapes to each page
+pages.forEach(p => addShapes(p));
 </script>
 
 </body>
