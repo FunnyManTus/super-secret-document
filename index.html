@@ -9,11 +9,13 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden;background:#f4efe9;font-family:'Libre Baskerville',serif;color:#3b2f2f}
+html,body{width:100%;height:100%;overflow:hidden;
+  font-family:'Libre Baskerville',serif;color:#3b2f2f;
+  background:#f4efe9;
+}
 
-/* ===== PAGE SYSTEM ===== */
+/* PAGE */
 #pages{width:100%;height:100%;position:relative}
-
 .page{
   position:absolute;inset:0;
   display:flex;flex-direction:column;
@@ -25,16 +27,22 @@ html,body{width:100%;height:100%;overflow:hidden;background:#f4efe9;font-family:
 }
 .page.active{opacity:1;transform:translateX(0);pointer-events:auto}
 
+/* SHAPES CONTAINER */
+.shapes-container{
+  position:absolute;inset:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+
 /* TEXT */
 h1,h2{font-family:'Cormorant Garamond',serif;font-weight:600}
 h1{font-size:2.4rem}h2{font-size:1.6rem}
 p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
 
-/* ===== SHAPES DECORATION ===== */
+/* SHAPES */
 .shape{
   position:absolute;
   opacity:0.15;
-  pointer-events:none;
 }
 .shape.circle{border-radius:50%;}
 .shape.star{
@@ -50,7 +58,17 @@ p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
   clip-path: polygon(50% 0%, 61% 12%, 75% 12%, 87% 25%, 100% 40%, 87% 60%, 50% 100%, 13% 60%, 0% 40%, 13% 25%, 25% 12%, 39% 12%);
 }
 
-/* ===== CAKE ===== */
+/* FLOAT RANDOM */
+@keyframes floatRandom{
+  0%{transform:translate(var(--x0,0),var(--y0,0)) rotate(0deg);}
+  25%{transform:translate(var(--x1,0),var(--y1,0)) rotate(45deg);}
+  50%{transform:translate(var(--x2,0),var(--y2,0)) rotate(90deg);}
+  75%{transform:translate(var(--x3,0),var(--y3,0)) rotate(135deg);}
+  100%{transform:translate(var(--x0,0),var(--y0,0)) rotate(180deg);}
+}
+.shape{animation-name:floatRandom;animation-duration:6s;animation-iteration-count:infinite;animation-timing-function: ease-in-out;}
+
+/* CAKE */
 .cake{
   width:190px;height:120px;background:#d3a06c;
   border-radius:20px;margin-top:24px;
@@ -62,7 +80,7 @@ p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
   animation:flicker .25s infinite alternate}
 @keyframes flicker{from{transform:scale(1)}to{transform:scale(1.3)}}
 
-/* ===== EXPLOSION ===== */
+/* EXPLOSION */
 .crumb{
   position:absolute;width:10px;height:10px;background:#c28b5a;
   border-radius:4px;
@@ -72,56 +90,59 @@ p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
   to{transform:translate(var(--x),var(--y)) rotate(720deg);opacity:0}
 }
 
-/* ===== SLIDESHOW ===== */
-.slideshow{position:absolute;inset:0;display:none;justify-content:center;align-items:center;background:#f4efe9}
+/* SLIDESHOW */
+.slideshow{position:absolute;inset:0;display:none;justify-content:center;align-items:center;overflow:hidden}
 
 /* PHOTO SLIDE */
 .photo-slide{
   position:absolute;inset:0;display:flex;
   justify-content:center;align-items:center;
-  opacity:0;transition:opacity 2.2s ease;
+  opacity:0;transition:opacity 2.5s ease;
+  flex-direction:column;
 }
 .photo-slide.active{opacity:1}
 
-/* ===== PHOTO FRAME (4:6) ===== */
+/* PHOTO FRAME */
 .photo-frame{
-  width:85vw;max-width:420px;aspect-ratio:4/6;
+  width:85vw;max-width:420px;
+  aspect-ratio:1410/1900;
   background:#efe7dc;padding:12px;border-radius:18px;
   box-shadow:0 18px 40px rgba(0,0,0,.18),
   inset 0 0 0 1px rgba(0,0,0,.05);
   display:flex;justify-content:center;align-items:center;
 }
 .photo-frame img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+.photo-frame.frame2{
+  aspect-ratio:1080/1350;
+  max-width:360px;
+}
+.photo-caption {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #3b2f2f;
+  text-align: center;
+  max-width: 360px;
+}
 
 /* TEXT SLIDE */
 .text-slide{
   position:absolute;inset:0;display:flex;
   justify-content:center;align-items:center;
-  background:radial-gradient(circle,#f7f2eb,#e6ddcf);
-  opacity:0;transition:opacity 1.5s ease;
+  background:rgba(255,255,255,0.25);
+  opacity:0;transition:opacity 3s ease;
 }
 .text-slide.active{opacity:1}
 .text-box{
-  background:rgba(255,255,255,.75);padding:30px 28px;
-  border-radius:22px;max-width:80%;font-size:1.05rem;line-height:1.9
+  background:rgba(255,255,255,0.7);padding:30px 28px;
+  border-radius:22px;max-width:80%;font-size:1.05rem;line-height:1.9;color:#3b2f2f
 }
-
-/* TYPEWRITER */
 .typewriter::after{content:"|";margin-left:4px;animation:blink 1s infinite;opacity:.6}
 @keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
 
-/* FILM GRAIN */
-body::after{
-  content:"";position:fixed;inset:0;
-  background:url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity:.1;pointer-events:none;
-}
-
-/* ===== CONFETTI ===== */
+/* CONFETTI */
 .confetti{
   position:absolute;
   width:10px;height:10px;
-  background:red;
   top:0;left:50%;
   pointer-events:none;
   opacity:0.9;
@@ -142,17 +163,20 @@ body::after{
 <div id="pages">
 
 <section class="page active" id="page0">
+  <div class="shapes-container"></div>
   <h1>Happy Birthday,<br>my favorite person.</h1>
   <p>tap anywhere</p>
 </section>
 
 <section class="page" id="page1">
+  <div class="shapes-container"></div>
   <h2>Another year.</h2>
   <p>Still choosing you.</p>
 </section>
 
 <section class="page" id="cakePage">
-  <h2>Make a wish.</h2>
+  <div class="shapes-container"></div>
+  <h2 id="cakeText">Make a wish.</h2>
   <div class="cake" id="cake">
     <div class="candle" style="left:45px"><div class="flame"></div></div>
     <div class="candle" style="left:90px"><div class="flame"></div></div>
@@ -166,17 +190,30 @@ body::after{
   <div class="photo-slide">
     <div class="photo-frame"><img src="photos/1.png"></div>
   </div>
+  
+  <div class="photo-slide">
+    <div>
+      <div class="photo-frame frame2"><img src="photos/2.png"></div>
+      <div class="photo-caption">"Still you. Still my favorite person to come back to."</div>
+    </div>
+  </div>
+  
   <div class="text-slide"><div class="text-box"></div></div>
-  <div class="photo-slide"><div class="photo-frame"><img src="photos/2.png"></div></div>
-  <div class="photo-slide"><div class="photo-frame"><img src="photos/3.jpg"></div></div>
-  <div class="photo-slide"><div class="photo-frame"><img src="photos/4.jpeg"></div></div>
+  
+  <div class="photo-slide">
+    <div class="photo-frame"><img src="photos/3.jpg"></div>
+  </div>
+  
+  <div class="photo-slide">
+    <div class="photo-frame"><img src="photos/4.jpeg"></div>
+  </div>
+  
   <div class="text-slide"><div class="text-box"></div></div>
 
 </div>
 </div>
 
 <script>
-/* ===== PAGE NAV ===== */
 const pages=document.querySelectorAll(".page");
 let current=0;
 function nextPage(){
@@ -184,27 +221,16 @@ function nextPage(){
     pages[current].classList.remove("active");
     current++;
     pages[current].classList.add("active");
-    addShapes(current);
+    addShapes(pages[current]); // tambahkan shapes di page ini
   }
 }
-document.body.addEventListener("click",()=>{if(current!==2)nextPage()});
+document.body.addEventListener("click",()=>{if(current!==2)nextPage();});
 
-/* ===== TYPEWRITER ===== */
-function typeWriter(el,text,speed=45){
-  el.textContent="";
-  el.classList.add("typewriter");
-  let i=0;
-  const typing=setInterval(()=>{
-    el.textContent+=text.charAt(i);
-    i++;
-    if(i>=text.length){
-      clearInterval(typing);
-      el.classList.remove("typewriter");
-    }
-  },speed);
+function typeWriter(el,text,speed=35){
+  el.textContent="";el.classList.add("typewriter");let i=0;
+  const typing=setInterval(()=>{el.textContent+=text.charAt(i);i++;if(i>=text.length){clearInterval(typing);el.classList.remove("typewriter");}},speed);
 }
 
-/* ===== SLIDESHOW + CONFETTI ===== */
 const cake=document.getElementById("cake");
 const flames=document.querySelectorAll(".flame");
 const music=document.getElementById("music");
@@ -214,8 +240,14 @@ const textSlides=document.querySelectorAll(".text-slide");
 const textBox=document.querySelectorAll(".text-box");
 
 const texts=[
-  "You turn quiet moments into memories I want to keep.",
-  "Still you. Still my favorite person to come back to."
+"You turn quiet moments into memories I want to keep forever. Being with you makes even the simplest days feel magical.",
+"Still you. Still my favorite person to come back to. Every laugh, every smile you give brightens my world in ways I never knew possible.",
+"Every time I see you, I’m reminded how lucky I am to have someone as kind, loving, and genuine as you in my life.",
+"Being with you makes ordinary days extraordinary. Even when nothing special happens, everything feels complete with you by my side.",
+"I fall for you a little more every day. Your presence, your laughter, and your warmth make everything feel lighter and brighter.",
+"You are my favorite thought in the morning, my comfort at night, and the little happiness in every moment between.",
+"Your laugh is my favorite sound, your smile my favorite sight, and just being with you makes all the small things in life feel perfect.",
+"Every memory we make together becomes a treasure I never want to forget. You make life feel like the most beautiful story."
 ];
 
 let started=false;
@@ -225,22 +257,25 @@ cake.addEventListener("click",async e=>{
   e.stopPropagation();
   flames.forEach(f=>f.style.display="none");
 
-  // Cake explode crumbs
+  // hilangkan teks "Make a wish" dan "tap the cake"
+  const cakeText = document.getElementById("cakeText");
+  if(cakeText) cakeText.style.display = "none";
+  const tapText = document.querySelector("#cakePage p");
+  if(tapText) tapText.style.display = "none";
+
+  // explode crumbs
   for(let i=0;i<22;i++){
     const c=document.createElement("div");
-    c.className="crumb";
-    c.style.left="90px";
-    c.style.top="55px";
+    c.className="crumb";c.style.left="90px";c.style.top="55px";
     c.style.setProperty("--x",`${(Math.random()-0.5)*420}px`);
     c.style.setProperty("--y",`${(Math.random()-0.5)*320}px`);
     cake.appendChild(c);
   }
   cake.style.opacity="0";
 
-  // Confetti
+  // confetti
   for(let i=0;i<80;i++){
-    const conf=document.createElement("div");
-    conf.className="confetti";
+    const conf=document.createElement("div");conf.className="confetti";
     conf.style.background=['#ff5f5f','#fce18a','#9cff5f','#5f9cff','#d05fff'][Math.floor(Math.random()*5)];
     conf.style.left=Math.random()*100+'vw';
     conf.style.width=5+Math.random()*8+'px';
@@ -250,19 +285,7 @@ cake.addEventListener("click",async e=>{
     setTimeout(()=>conf.remove(),5000);
   }
 
-  // Music
-  if(!started){
-    started=true;
-    music.volume=0;
-    await music.play();
-    let v=0;
-    const fade=setInterval(()=>{
-      v+=0.05;
-      music.volume=v;
-      if(v>=1)clearInterval(fade);
-    },120);
-  }
-
+  if(!started){started=true;music.volume=0;await music.play();let v=0;const fade=setInterval(()=>{v+=0.05;music.volume=v;if(v>=1)clearInterval(fade);},120);}
   slideshow.style.display="flex";
   photos[0].classList.add("active");
 
@@ -270,54 +293,45 @@ cake.addEventListener("click",async e=>{
     step++;
     photos.forEach(p=>p.classList.remove("active"));
     textSlides.forEach(t=>t.classList.remove("active"));
-
+    const idx = step % texts.length;
     switch(step){
-      case 1:
-        textBox[0].textContent = "";
-        typeWriter(textBox[0], texts[0]);
-        textSlides[0].classList.add("active");
-        break;
-      case 2:
-        photos[1].classList.add("active");
-        break;
-      case 3:
-        photos[2].classList.add("active");
-        break;
-      case 4:
-        photos[3].classList.add("active");
-        break;
-      case 5:
-        textBox[1].textContent = "";
-        typeWriter(textBox[1], texts[1]);
-        textSlides[1].classList.add("active");
-        break;
+      case 1:textBox[0].textContent = "";typeWriter(textBox[0], texts[idx]);textSlides[0].classList.add("active");break;
+      case 2:photos[1].classList.add("active");break;
+      case 3:photos[2].classList.add("active");break;
+      case 4:photos[3].classList.add("active");break;
+      case 5:textBox[1].textContent = "";typeWriter(textBox[1], texts[(idx+1)%texts.length]);textSlides[1].classList.add("active");break;
     }
-  },4500);
+  },6000);
 });
 
-/* ===== ADD SHAPES DECOR ===== */
-function addShapes(pageIndex){
-  const page=pages[pageIndex];
-  if(!page) return;
-  const shapes=['circle','star','heart'];
-  for(let i=0;i<8;i++){
+// shapes untuk setiap page
+function addShapes(page){
+  const shapesArr=['circle','star','heart'];
+  const container=page.querySelector(".shapes-container");
+  for(let i=0;i<15;i++){
     const s=document.createElement('div');
-    const type=shapes[Math.floor(Math.random()*shapes.length)];
+    const type=shapesArr[Math.floor(Math.random()*shapesArr.length)];
     s.className='shape '+type;
-    s.style.top=Math.random()*80+'%';
-    s.style.left=Math.random()*80+'%';
-    const size=10+Math.random()*20;
-    s.style.width=size+'px';
-    s.style.height=size+'px';
+    const size=10+Math.random()*25;
+    s.style.width=size+'px';s.style.height=size+'px';
     s.style.background=['#ff5f5f','#fce18a','#9cff5f','#5f9cff','#d05fff'][Math.floor(Math.random()*5)];
-    page.appendChild(s);
+    container.appendChild(s);
+    s.style.setProperty('--x0',`${Math.random()*window.innerWidth}px`);
+    s.style.setProperty('--y0',`${Math.random()*window.innerHeight}px`);
+    s.style.setProperty('--x1',`${Math.random()*window.innerWidth}px`);
+    s.style.setProperty('--y1',`${Math.random()*window.innerHeight}px`);
+    s.style.setProperty('--x2',`${Math.random()*window.innerWidth}px`);
+    s.style.setProperty('--y2',`${Math.random()*window.innerHeight}px`);
+    s.style.setProperty('--x3',`${Math.random()*window.innerWidth}px`);
+    s.style.setProperty('--y3',`${Math.random()*window.innerHeight}px`);
+    s.style.animationDuration=(5+Math.random()*6)+'s';
+    s.style.animationDelay=(Math.random()*3)+'s';
   }
 }
 
-// Initial shapes for first page
-addShapes(0);
-</script>
+// shapes awal
+pages.forEach(p=>addShapes(p));
 
+</script>
 </body>
 </html>
-
