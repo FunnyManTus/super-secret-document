@@ -1,12 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Libre+Baskerville&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;
+  font-family:'Libre Baskerville',serif;color:#3b2f2f;
+  background:#f4efe9;
+}
+
+/* PAGE */
+#pages{width:100%;height:100%;position:relative}
+.page{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;padding:24px;
+  opacity:0;transform:translateX(40px);
+  transition:1.2s ease;pointer-events:none;
+  overflow:hidden;
+}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+
+/* SHAPES CONTAINER */
+.shapes-container{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+
+/* TEXT */
+h1,h2{font-family:'Cormorant Garamond',serif;font-weight:600}
+h1{font-size:2.4rem}h2{font-size:1.6rem}
+p{font-size:1rem;line-height:1.8;max-width:320px;margin-top:16px}
+
+/* SHAPES */
+.shape{position:absolute;opacity:0.15;}
+.shape.circle{border-radius:50%;}
+.shape.star{width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #ff5f5f;transform:rotate(35deg);}
+.shape.heart{width:20px;height:20px;background:red;clip-path:polygon(50% 0%,61% 12%,75% 12%,87% 25%,100% 40%,87% 60%,50% 100%,13% 60%,0% 40%,13% 25%,25% 12%,39%12%);}
+
+@keyframes floatRandom{
+  0%{transform:translate(var(--x0,0),var(--y0,0)) rotate(0deg);}
+  25%{transform:translate(var(--x1,0),var(--y1,0)) rotate(45deg);}
+  50%{transform:translate(var(--x2,0),var(--y2,0)) rotate(90deg);}
+  75%{transform:translate(var(--x3,0),var(--y3,0)) rotate(135deg);}
+  100%{transform:translate(var(--x0,0),var(--y0,0)) rotate(180deg);}
+}
+.shape{animation-name:floatRandom;animation-duration:6s;animation-iteration-count:infinite;animation-timing-function:ease-in-out;}
+
+/* CAKE */
+.cake{width:190px;height:120px;background:#d3a06c;border-radius:20px;margin-top:24px;position:relative;box-shadow:0 14px 26px rgba(0,0,0,.18);cursor:pointer;pointer-events:auto;z-index:10;}
+.candle{width:10px;height:36px;background:#fff;position:absolute;top:-36px}
+.flame{width:12px;height:12px;background:orange;border-radius:50%;animation:flicker .25s infinite alternate}
+@keyframes flicker{from{transform:scale(1)}to{transform:scale(1.3)}}
+
+/* EXPLOSION */
+.crumb{position:absolute;width:10px;height:10px;background:#c28b5a;border-radius:4px;animation:explode 1.2s ease forwards;}
+@keyframes explode{to{transform:translate(var(--x),var(--y)) rotate(720deg);opacity:0}}
+
+/* SLIDESHOW */
+.slideshow{position:absolute;inset:0;display:none;justify-content:center;align-items:center;overflow:hidden}
+
+/* PHOTO SLIDES */
+.photo-slide{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;opacity:0;transition:opacity 2.5s ease;flex-direction:column;}
+.photo-slide.active{opacity:1}
+
+/* PHOTO FRAME STYLES */
+.photo-frame{width:85vw;max-width:420px;aspect-ratio:1410/1900;background:#efe7dc;padding:12px;border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,.18),inset 0 0 0 1px rgba(0,0,0,.05);display:flex;justify-content:center;align-items:center;}
+.photo-frame img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+
+.photo-frame.frame2{aspect-ratio:1080/1350;max-width:360px;}
+.photo-frame.frame3{aspect-ratio:1587/2245;max-width:360px;} /* FOTO KE‑3 */
+
+/* CAPTION */
+.photo-caption{margin-top:12px;font-size:0.95rem;color:#3b2f2f;text-align:center;max-width:360px;}
+
+/* TEXT SLIDE */
+.text-slide{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;background:rgba(255,255,255,0.25);opacity:0;transition:opacity 3s ease;}
+.text-slide.active{opacity:1}
+.text-box{background:rgba(255,255,255,0.7);padding:30px 28px;border-radius:22px;max-width:80%;font-size:1.05rem;line-height:1.9;color:#3b2f2f}
+.typewriter::after{content:"|";margin-left:4px;animation:blink 1s infinite;opacity:.6}
+@keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+
+/* CONFETTI */
+.confetti{position:absolute;width:10px;height:10px;top:0;left:50%;pointer-events:none;opacity:0.9;border-radius:50%;animation:fall linear forwards;}
+@keyframes fall{0%{transform:translateY(0) rotate(0deg);}100%{transform:translateY(120vh) rotate(360deg);}}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="timur.mp3" loop></audio>
+
+<div id="pages">
+
+<section class="page active" id="page0">
+  <div class="shapes-container"></div>
+  <h1>Happy Birthday,<br>my favorite person.</h1>
+  <p>tap anywhere</p>
+</section>
+
+<section class="page" id="page1">
+  <div class="shapes-container"></div>
+  <h2>Another year.</h2>
+  <p>Still choosing you.</p>
+</section>
+
+<section class="page" id="cakePage">
+  <div class="shapes-container"></div>
+  <div class="cake" id="cake">
+    <div class="candle" style="left:45px"><div class="flame"></div></div>
+    <div class="candle" style="left:90px"><div class="flame"></div></div>
+    <div class="candle" style="left:135px"><div class="flame"></div></div>
+  </div>
+</section>
+
+<div class="slideshow" id="slideshow">
+
+  <div class="photo-slide">
+    <div class="photo-frame"><img src="https://drive.google.com/uc?export=view&id=1I6wXksoJI_DdOFJznn8Ei-5WP1wS5Lpu"></div>
+  </div>
+  
+  <div class="photo-slide">
+    <div>
+      <div class="photo-frame frame2"><img src="https://drive.google.com/uc?export=view&id=1tSlP7VmMklUNLPk04d6lFJdQ44jifGmv"></div>
+      <div class="photo-caption">"Still you. Still my favorite person to come back to."</div>
+    </div>
+  </div>
+  
+  <div class="text-slide"><div class="text-box"></div></div>
+  
+  <div class="photo-slide">
+    <div class="photo-frame frame3"><img src="https://drive.google.com/uc?export=view&id=1HOtdMz44oJFhPGhTsuHLH3rg3pTn_11s"></div>
+  </div>
+  
+  <div class="photo-slide">
+    <div class="photo-frame"><img src="https://drive.google.com/uc?export=view&id=1nAMrlgQS4hycbf_tXXM2f1aWmtnxi0vS"></div>
+  </div>
+  
+  <div class="photo-slide">
+    <div class="photo-frame"><img src="https://drive.google.com/uc?export=view&id=1W9vl2xeRk81WnW1IhF3V5F_TlBcZPt_w"></div>
+  </div>
+  
+  <div class="text-slide"><div class="text-box"></div></div>
+
+</div>
+</div>
+
+<script>
+// Pages
+const pages=document.querySelectorAll(".page");
+let current=0;
+function nextPage(){if(current<pages.length-1){pages[current].classList.remove("active");current++;pages[current].classList.add("active");addShapes(pages[current]);}}
+document.body.addEventListener("click",()=>{if(current!==2) nextPage();});
+
+// Shapes
+function addShapes(page){
+  const shapesArr=['circle','star','heart'];
+  const container=page.querySelector(".shapes-container");
+  for(let i=0;i<15;i++){
+    const s=document.createElement('div');
+    const type=shapesArr[Math.floor(Math.random()*shapesArr.length)];
+    s.className='shape '+type;
+    const size=10+Math.random()*25;
+    s.style.width=size+'px';s.style.height=size+'px';
+    s.style.background=['#ff5f5f','#fce18a','#9cff5f','#5f9cff','#d05fff'][Math.floor(Math.random()*5)];
+    container.appendChild(s);
+    s.style.setProperty('--x0',`${Math.random()*window.innerWidth}px`);
+    s.style.setProperty('--y0',`${Math.random()*window.innerHeight}px`);
+    s.style.setProperty('--x1',`${Math.random()*window.innerWidth}px`);
+    s.style.setProperty('--y1',`${Math.random()*window.innerHeight}px`);
+    s.style.setProperty('--x2',`${Math.random()*window.innerWidth}px`);
+    s.style.setProperty('--y2',`${Math.random()*window.innerHeight}px`);
+    s.style.setProperty('--x3',`${Math.random()*window.innerWidth}px`);
+    s.style.setProperty('--y3',`${Math.random()*window.innerHeight}px`);
+    s.style.animationDuration=(5+Math.random()*6)+'s';
+    s.style.animationDelay=(Math.random()*3)+'s';
+  }
+}
+
+// Typewriter
+function typeWriter(el,text,speed=35){
+  el.textContent="";el.classList.add("typewriter");let i=0;
+  const typing=setInterval(()=>{el.textContent+=text.charAt(i);i++;if(i>=text.length){clearInterval(typing);el.classList.remove("typewriter");}},speed);
+}
+
+// Cake & slideshow
+const cake=document.getElementById("cake");
+const flames=document.querySelectorAll(".flame");
+const music=document.getElementById("music");
+const slideshow=document.getElementById("slideshow");
+const photos=document.querySelectorAll(".photo-slide");
+const textSlides=document.querySelectorAll(".text-slide");
+const textBox=document.querySelectorAll(".text-box");
+
+const texts=[
+"You turn quiet moments into memories I want to keep forever. Being with you makes even the simplest days feel magical.",
+"Still you. Still my favorite person to come back to. Every laugh, every smile you give brightens my world in ways I never knew possible.",
+"Every time I see you, I’m reminded how lucky I am to have someone as kind, loving, and genuine as you in my life.",
+"Being with you makes ordinary days extraordinary. Even when nothing special happens, everything feels complete with you by my side.",
+"I fall for you a little more every day. Your presence, your laughter, and your warmth make everything feel lighter and brighter.",
+"You are my favorite thought in the morning, my comfort at night, and the little happiness in every moment between.",
+"Your laugh is my favorite sound, your smile my favorite sight, and just being with you makes all the small things in life feel perfect.",
+"Every memory we make together becomes a treasure I never want to forget. You make life feel like the most beautiful story."
+];
+
+let started=false;
 let step=0;
 
-cake.addEventListener("click", async e=>{
+cake.addEventListener("click",async e=>{
   e.stopPropagation();
-  flames.forEach(f=>f.style.display="none");
-  document.getElementById("cakeText").style.display="none";
-  document.querySelector("#cakePage p").style.display="none";
 
-  // animasi crumb & confetti
+  // hide cake flames
+  flames.forEach(f=>f.style.display="none");
+
+  // crumb + confetti
   for(let i=0;i<22;i++){
     const c=document.createElement("div");
     c.className="crumb";c.style.left="90px";c.style.top="55px";
@@ -27,33 +237,34 @@ cake.addEventListener("click", async e=>{
     setTimeout(()=>conf.remove(),5000);
   }
 
-  if(!started){
-    started=true;
-    music.volume=0;
-    await music.play();
-    let v=0;
-    const fade=setInterval(()=>{v+=0.05;music.volume=v;if(v>=1)clearInterval(fade);},120);
-  }
+  // start music
+  if(!started){started=true;music.volume=0;await music.play();let v=0;const fade=setInterval(()=>{v+=0.05;music.volume=v;if(v>=1)clearInterval(fade);},120);}
 
+  // show slideshow
   slideshow.style.display="flex";
   photos[0].classList.add("active");
 
-  // ======= PERUBAHAN: INTERVAL 15 DETIK =========
+  // slide every 15s
   setInterval(()=>{
     step++;
     photos.forEach(p=>p.classList.remove("active"));
     textSlides.forEach(t=>t.classList.remove("active"));
 
-    // urutan slide: foto1 → foto2 → text → foto3 → foto4 → foto5 → text → ulang
     switch(step%8){
-      case 0: photos[0].classList.add("active"); break; // foto1
-      case 1: photos[1].classList.add("active"); break; // foto2
-      case 2: textBox[0].textContent = ""; typeWriter(textBox[0], texts[0]); textSlides[0].classList.add("active"); break; // text1
-      case 3: photos[2].classList.add("active"); break; // foto3
-      case 4: photos[3].classList.add("active"); break; // foto4
-      case 5: photos[4].classList.add("active"); break; // foto5
-      case 6: textBox[1].textContent = ""; typeWriter(textBox[1], texts[1]); textSlides[1].classList.add("active"); break; // text2
-      case 7: photos[0].classList.add("active"); break; // ulang loop
+      case 0: photos[0].classList.add("active"); break;
+      case 1: photos[1].classList.add("active"); break;
+      case 2: textBox[0].textContent = ""; typeWriter(textBox[0], texts[0]); textSlides[0].classList.add("active"); break;
+      case 3: photos[2].classList.add("active"); break;
+      case 4: photos[3].classList.add("active"); break;
+      case 5: photos[4].classList.add("active"); break;
+      case 6: textBox[1].textContent = ""; typeWriter(textBox[1], texts[1]); textSlides[1].classList.add("active"); break;
+      case 7: photos[0].classList.add("active"); break;
     }
-  }, 15000); // 15000 ms = 15 detik
+  },15000); // 15 detik per slide
 });
+
+pages.forEach(p=>addShapes(p));
+</script>
+
+</body>
+</html>
